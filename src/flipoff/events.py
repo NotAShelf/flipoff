@@ -31,15 +31,19 @@ class PoweroffEvent(Event):
 
         bus = await MessageBus(bus_type=BusType.SYSTEM).connect()
         try:
+            introspection = await bus.introspect(
+                "org.freedesktop.login1",
+                "/org/freedesktop/login1",
+            )
             proxy = bus.get_proxy_object(
                 "org.freedesktop.login1",
                 "/org/freedesktop/login1",
-                None,
+                introspection,
             )
             manager = proxy.get_interface("org.freedesktop.login1.Manager")
             await manager.call_power_off(False)
         finally:
-            await bus.disconnect()
+            bus.disconnect()
 
 
 class EventRegistry:
