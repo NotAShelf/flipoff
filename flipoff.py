@@ -1,3 +1,4 @@
+import argparse
 import asyncio
 import os
 import time
@@ -64,6 +65,14 @@ async def async_poweroff() -> None:
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description="Hand gesture poweroff utility")
+    parser.add_argument(
+        "--headless",
+        action="store_true",
+        help="Hide GUI window and run in headless mode",
+    )
+    args = parser.parse_args()
+
     if not MODEL_PATH:
         raise RuntimeError("FLIPOFF_MODEL_PATH environment variable not set")
 
@@ -112,12 +121,14 @@ def main() -> None:
                     last_trigger = now
                     loop.run_until_complete(async_poweroff())
 
-        cv2.imshow("Gesture Poweroff", frame)
-        if cv2.waitKey(1) & 0xFF == 27:
-            break
+        if not args.headless:
+            cv2.imshow("Gesture Poweroff", frame)
+            if cv2.waitKey(1) & 0xFF == 27:
+                break
 
     cap.release()
-    cv2.destroyAllWindows()
+    if not args.headless:
+        cv2.destroyAllWindows()
     detector.close()
     loop.close()
 
