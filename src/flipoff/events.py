@@ -31,13 +31,16 @@ class PoweroffEvent(Event):
         from dbus_next.constants import BusType
 
         bus = await MessageBus(bus_type=BusType.SYSTEM).connect()
-        proxy = bus.get_proxy_object(
-            "org.freedesktop.login1",
-            "/org/freedesktop/login1",
-            None,
-        )
-        manager = proxy.get_interface("org.freedesktop.login1.Manager")
-        await manager.call_power_off(False)
+        try:
+            proxy = bus.get_proxy_object(
+                "org.freedesktop.login1",
+                "/org/freedesktop/login1",
+                None,
+            )
+            manager = proxy.get_interface("org.freedesktop.login1.Manager")
+            await manager.call_power_off(False)
+        finally:
+            await bus.disconnect()
 
 
 class EventRegistry:
