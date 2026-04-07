@@ -16,6 +16,7 @@ from mediapipe.tasks.python.components.containers.landmark import (  # type: ign
 )
 
 MODEL_PATH = os.environ.get("FLIPOFF_MODEL_PATH")
+DEBUG = os.environ.get("FLIPOFF_DRYRUN", "0") == "1"
 
 
 async def poweroff() -> None:
@@ -53,6 +54,9 @@ def is_flipping_off(hand: list[NormalizedLandmark]) -> bool:
 
 
 async def async_poweroff() -> None:
+    if DEBUG:
+        print("DRYRUN: Would power off")
+        return
     try:
         await poweroff()
     except Exception as e:
@@ -90,7 +94,19 @@ def main() -> None:
         if result.hand_landmarks:
             hand: list[NormalizedLandmark] = result.hand_landmarks[0]
 
-            if is_flipping_off(hand):
+            if DEBUG:
+                for landmark in hand:
+                    x = int(landmark.x * frame.shape[1])
+                    y = int(landmark.y * frame.shape[0])
+                    cv2.circle(frame, (x, y), 5, (0, 255, 0), -1)
+
+            flipping = is_flipping_off(hand)
+            if DEBUG:
+                text = "FLIPPING OFF DETECTED" if flipping else "Waiting for gesture..."
+                color = (0, 0, 255) if flipping else (0, 255, 0)
+                cv2.putText(frame, text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, color, 2)
+
+            if flipping:
                 now: float = time.time()
                 if now - last_trigger > 2:
                     last_trigger = now
