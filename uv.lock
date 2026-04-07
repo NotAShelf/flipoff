@@ -258,6 +258,13 @@ dependencies = [
     { name = "opencv-contrib-python" },
 ]
 
+[package.optional-dependencies]
+dev = [
+    { name = "black" },
+    { name = "isort" },
+    { name = "mypy" },
+]
+
 [package.dev-dependencies]
 dev = [
     { name = "black" },
@@ -267,11 +274,15 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "dbus-next" },
-    { name = "mediapipe" },
-    { name = "numpy" },
-    { name = "opencv-contrib-python" },
+    { name = "black", marker = "extra == 'dev'", specifier = ">=26.3.1" },
+    { name = "dbus-next", specifier = ">=0.2.3" },
+    { name = "isort", marker = "extra == 'dev'", specifier = ">=8.0.1" },
+    { name = "mediapipe", specifier = ">=0.10.33" },
+    { name = "mypy", marker = "extra == 'dev'", specifier = ">=1.20.0" },
+    { name = "numpy", specifier = ">=2.4.4" },
+    { name = "opencv-contrib-python", specifier = ">=4.13.0" },
 ]
+provides-extras = ["dev"]
 
 [package.metadata.requires-dev]
 dev = [
