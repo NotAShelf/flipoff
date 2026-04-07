@@ -14,13 +14,13 @@ from flipoff.gesture import GestureRegistry
 
 def _get_callback(
     loop: asyncio.AbstractEventLoop,
-    gesture_cls: type[Gesture],
+    gesture_instance: Gesture,
     event_instance: object,
     cooldown: float,
     last_trigger: list[float],
 ) -> callable:
     def callback(hand: object) -> bool:
-        gesture_detected = gesture_cls().detect(hand)
+        gesture_detected = gesture_instance.detect(hand)
         if gesture_detected:
             now = time.time()
             if now - last_trigger[0] > cooldown:
@@ -60,7 +60,7 @@ def run(
     gesture_instance = gesture_cls()
     last_trigger = [0.0]
 
-    callback = _get_callback(loop, gesture_cls, event_instance, cooldown, last_trigger)
+    callback = _get_callback(loop, gesture_instance, event_instance, cooldown, last_trigger)
 
     while True:
         ret, frame = camera.read()
@@ -91,6 +91,12 @@ def run(
     if not headless:
         cv2.destroyAllWindows()
     detector.close()
+
+    pending = asyncio.all_tasks(loop)
+    for task in pending:
+        task.cancel()
+    loop.run_until_complete(asyncio.gather(*pending, return_exceptions=True))
+
     loop.close()
 
 
