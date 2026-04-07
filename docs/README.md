@@ -10,6 +10,13 @@ webcam feed for a specific, globally recognized gesture of structural
 disapproval, also known as the middle finger, and immediately executes a system
 shutdown via D-Bus.
 
+> [!IMPORTANT]
+> **Disclaimer**
+>
+> I am not responsible if you use this while in a Zoom meeting and accidentally
+> flip off your coworkers. Granted, that would be hilarious and I want to hear
+> about it but I don't accept responsibility.
+
 ## Motivation
 
 We live in an era of digital friction. Imagine you have just sat through a
@@ -35,9 +42,9 @@ made. Built on three core pillars of modern engineering:
 We have spent decades teaching computers to understand our speech and our touch.
 It was about time we taught them to understand our boundaries.
 
-> [!IMPORTANT]
-> **Disclaimer**
->
-> I am not responsible if you use this while in a Zoom meeting and accidentally
-> flip off your coworkers. Granted, that would be hilarious and I want to hear
-> about it but I don't accept responsibility.
+## Demo
+
+Here's Walter White flipping off your computer, to give you an idea of how it
+operates:
+
+<video src="/assets/waltuh.mp4" controls width=800/>
