@@ -1,5 +1,4 @@
 import time
-from typing import Callable
 
 import cv2
 import mediapipe as mp
@@ -30,7 +29,9 @@ class HandDetector:
     ) -> list[list[NormalizedLandmark]]:
         if timestamp_ms is None:
             timestamp_ms = int(time.time() * 1000)
-        mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=frame)
+        # OpenCV captures in BGR; MediaPipe expects RGB.
+        frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=frame_rgb)
         result = self._detector.detect_for_video(mp_image, timestamp_ms)
         return result.hand_landmarks if result.hand_landmarks else []
 
@@ -41,6 +42,8 @@ class HandDetector:
 class Camera:
     def __init__(self, index: int = 0) -> None:
         self._cap = cv2.VideoCapture(index)
+        if not self._cap.isOpened():
+            raise RuntimeError(f"Cannot open camera at index {index}")
 
     def read(self) -> tuple[bool, np.ndarray]:
         ret, frame = self._cap.read()
@@ -48,22 +51,3 @@ class Camera:
 
     def release(self) -> None:
         self._cap.release()
-
-
-class GestureDetector:
-    def __init__(
-        self,
-        detector: HandDetector,
-        gesture_callback: Callable[[list[NormalizedLandmark]], bool],
-    ) -> None:
-        self._detector = detector
-        self._callback = gesture_callback
-
-    def process_frame(self, frame: np.ndarray) -> bool | None:
-        hands = self._detector.detect(frame)
-        if hands:
-            return self._callback(hands[0])
-        return None
-
-    def close(self) -> None:
-        self._detector.close()
