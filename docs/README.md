@@ -1,9 +1,21 @@
-# flipoff
+<!--markdownlint-disable MD013 MD033 MD041 -->
 
-> Congratulations. You have reached the logical conclusion of your relationship
-> with modern computing.
+<div id="doc-begin" align="center">
+  <h1 id="header">flipoff</h1>
+  <p>Congratulations. You have reached the logical conclusion of your relationship with modern computing.</p>
+</div>
 
-![Demo](./assets/demo.png)
+<p align="center">
+  <br/>
+  <img
+    alt="Latest demo for flipoff with Walter White from Breaking Bad"
+    src="./assets/demo.png"
+    width="800px"
+  >
+  <br/>
+</p>
+
+## Synopsis
 
 flipoff is a Python-based utility that leverages _sophisticated computer vision_
 to _solve the oldest problem in human-computer interaction_: the fact that your
