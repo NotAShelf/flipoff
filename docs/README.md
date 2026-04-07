@@ -3,6 +3,8 @@
 > Congratulations. You have reached the logical conclusion of your relationship
 > with modern computing.
 
+![Demo](./assets/demo.png)
+
 flipoff is a Python-based utility that leverages _sophisticated computer vision_
 to _solve the oldest problem in human-computer interaction_: the fact that your
 machine is still running when you no longer wish it to be. It monitors your
@@ -42,9 +44,26 @@ made. Built on three core pillars of modern engineering:
 We have spent decades teaching computers to understand our speech and our touch.
 It was about time we taught them to understand our boundaries.
 
-## Demo
+## Building & Development
 
-Here's Walter White flipping off your computer, to give you an idea of how it
-operates:
+### Prerequisites
 
-<video src="/assets/waltuh.mp4" controls width=800/>
+- Python 3.11+
+- [uv](https://github.com/astral-sh/uv)
+- Bunch of system libraries (see `shell.nix` for a list)
+
+Or, if you're sane, Nix. For now a very simple Nix development shell is provided
+in `shell.nix`. Use either `diren allow` or `nix-shell` to get the dependencies.
+
+### Running
+
+```bash
+# With webcam
+$ uv run flipoff
+
+# With debug overlay for landmarks
+$ uv run flipoff --debug
+
+# Dry run (no actual poweroff)
+$ FLIPOFF_DRYRUN=1 uv run flipoff
+```
