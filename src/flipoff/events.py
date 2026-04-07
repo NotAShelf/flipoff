@@ -15,10 +15,9 @@ class Event(ABC):
 
 class PoweroffEvent(Event):
     name = "poweroff"
-    DEBUG: bool = os.environ.get("FLIPOFF_DRYRUN", "0") == "1"
 
     async def trigger(self) -> None:
-        if self.DEBUG:
+        if os.environ.get("FLIPOFF_DRYRUN", "0") == "1":
             print("DRYRUN: Would power off")
             return
         try:
