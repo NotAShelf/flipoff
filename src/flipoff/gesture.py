@@ -1,14 +1,6 @@
-from dataclasses import dataclass
-from typing import Callable
 from typing import ClassVar
 
 from mediapipe.tasks.python.components.containers.landmark import NormalizedLandmark
-
-
-@dataclass
-class GestureResult:
-    name: str
-    detected: bool
 
 
 class Gesture:
@@ -35,26 +27,17 @@ class GestureRegistry:
         return cls._gestures.copy()
 
 
-def _check_y_values(
-    hand: list[NormalizedLandmark],
-    *indices: int,
-) -> bool:
-    for idx in indices:
-        if hand[idx].y is None:
-            return False
-    return True
-
-
 @GestureRegistry.register
 class FlippingOffGesture(Gesture):
     name = "flipping_off"
 
     def detect(self, hand: list[NormalizedLandmark]) -> bool:
-        if not _check_y_values(hand, 12, 10, 8, 6, 16, 14, 20, 18):
+        # MediaPipe always returns 21 landmarks; guard against malformed results.
+        if len(hand) < 21:
             return False
         return bool(
-            hand[12].y < hand[10].y
-            and hand[8].y > hand[6].y
-            and hand[16].y > hand[14].y
-            and hand[20].y > hand[18].y
+            hand[12].y < hand[10].y  # middle tip above middle PIP (extended)
+            and hand[8].y > hand[6].y  # index tip below index PIP (curled)
+            and hand[16].y > hand[14].y  # ring tip below ring PIP (curled)
+            and hand[20].y > hand[18].y  # pinky tip below pinky PIP (curled)
         )
