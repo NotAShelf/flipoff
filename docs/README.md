@@ -65,7 +65,8 @@ It was about time we taught them to understand our boundaries.
 - Bunch of system libraries (see `shell.nix` for a list)
 
 Or, if you're sane, Nix. For now a very simple Nix development shell is provided
-in `shell.nix`. Use either `diren allow` or `nix-shell` to get the dependencies.
+in `shell.nix`. Use either `direnv allow` or `nix-shell` to get the
+dependencies.
 
 ### Running
 
