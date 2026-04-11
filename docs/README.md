@@ -64,12 +64,21 @@ It was about time we taught them to understand our boundaries.
 - Linux machine running with D-Bus (primarily Systemd-based distributions)
 - Python 3.11+
 - [uv](https://github.com/astral-sh/uv)
-- Bunch of system libraries (see `shell.nix` for a list)
+- Bunch of system libraries (see `flake.nix` for a list)
 - A working webcam
 
-Or, if you're sane, Nix. For now a very simple Nix development shell is provided
-in `shell.nix`. Use either `direnv allow` or `nix-shell` to get the
-dependencies.
+Or if you are sane, just Nix on a system with working D-Bus and a webcam is
+sufficient. Everything else is provided by the `flake nix`, which you may use to
+enter a development shell with `direnv allow` or `nix-shell` to get the
+dependencies. Alternatively, a Nix package is provided. To install:
+
+```sh
+# Add the default package to your Nix profile
+$ nix profile add github:NotAShelf/flipoff#flipoff
+```
+
+Then you may run `flipoff` as usual. For NixOS systems, prefer
+`environment.systemPackages` over imperative `nix profile add`.
 
 ### Running
 
@@ -93,7 +102,8 @@ $ flipoff --debug
 $ FLIPOFF_DRYRUN=1 flipoff
 ```
 
-For development, `uv run flipoff` works without installing.
+For development, `uv run flipoff` or `nix build .#flipoff` works without
+installing anything on your system.
 
 ### CLI Options
 
@@ -110,8 +120,9 @@ For development, `uv run flipoff` works without installing.
 
 To run this program, **you will need Google's MediaPipe models** downloaded
 somewhere. This is done automatically inside the Nix devshell when you run
-`nix-shell`, but to run this program on different distributions or without Nix
-you need to get the models.
+`nix develop`, and is automatically downloaded & added to the wrapper with Nix;
+but to run this program on different distributions or without Nix you need to
+get the models yourself.
 
 [here]: https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task
 
