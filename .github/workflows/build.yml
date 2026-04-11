@@ -19,10 +19,9 @@ jobs:
       - name: Build binary wheels
         uses: pypa/cibuildwheel@v3.4.1
         env:
-          CIBW_BUILD: "flipoff-*"
           CIBW_SKIP: "*-musllinux*"
           CIBW_PRERELEASE_PYTHON: "0"
-          CIBW_MANYLINUX_X86_64_IMAGE: "manylinux2014"
+          CIBW_MANYLINUX_X86_64_IMAGE: "manylinux_2_28"
           CIBW_BEFORE_BUILD_LINUX: "pip install uv && uv sync --no-dev"
 
       - name: Build source tarball
