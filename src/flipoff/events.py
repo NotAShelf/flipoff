@@ -41,9 +41,9 @@ class PoweroffEvent(Event):
                 introspection,
             )
             manager = proxy.get_interface("org.freedesktop.login1.Manager")
-            await manager.call_power_off(False)
+            await manager.call_power_off(False)  # type: ignore[attr-defined]
         finally:
-            bus.disconnect()
+            bus.disconnect()  # type: ignore[no-untyped-call]
 
 
 class EventRegistry:
