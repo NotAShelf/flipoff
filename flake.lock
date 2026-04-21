@@ -27,11 +27,11 @@
         "uv2nix": "uv2nix"
       },
       "locked": {
-        "lastModified": 1773870109,
-        "narHash": "sha256-ZoTdqZP03DcdoyxvpFHCAek4bkPUTUPUF3oCCgc3dP4=",
+        "lastModified": 1776659114,
+        "narHash": "sha256-qapCOQmR++yZSY43dzrp3wCrkOTLpod+ONtJWBk6iKU=",
         "owner": "pyproject-nix",
         "repo": "build-system-pkgs",
-        "rev": "b6e74f433b02fa4b8a7965ee24680f4867e2926f",
+        "rev": "ffaa2161dd5d63e0e94591f86b54fc239660fb2e",
         "type": "github"
       },
       "original": {
@@ -80,11 +80,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1773359304,
-        "narHash": "sha256-knv2C6tIk5ysix+9TxWIenPvpB20kFjQ1CH6SJMBNsU=",
+        "lastModified": 1776317509,
+        "narHash": "sha256-nSriomT9IJvyVY/mzyFz4Un6DHSjCfrVitcIfV+VHnY=",
         "owner": "pyproject-nix",
         "repo": "uv2nix",
-        "rev": "27b135ea72ab1637fc5845a61c101ea66d6636d6",
+        "rev": "56cfeb9813150e1f900f13e4d6fe46e2845f82d5",
         "type": "github"
       },
       "original": {
